@@ -46,7 +46,7 @@ jobs:
           security: loose
           port: ${{ secrets.FTP_PORT || 21 }}
           local-dir: ./dist/
-          server-dir: /
+          server-dir: ./
           exclude: |
             **/ezgif-frame-*.jpg
           timeout: 180000
