@@ -59,7 +59,7 @@ export class LeadService {
       const res = await fetch('/api/leads');
       if (res.ok) {
         const json = await res.json();
-        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+        if (json && json.success && Array.isArray(json.data)) {
           const serverLeads = json.data.map(r => ({
             id: r.id,
             name: r.studentName || r.name,
@@ -79,10 +79,8 @@ export class LeadService {
             history: [{ timestamp: r.createdAt || new Date().toISOString(), action: 'Online Enquiry Received', details: `Registered for ${r.course || 'Law Programme'}`, performedBy: 'Website Visitor' }]
           }));
 
-          const localLeads = MockDataProvider.getStoredLeads();
-          const serverIds = new Set(serverLeads.map(l => l.id.toLowerCase()));
-          const combined = [...serverLeads, ...localLeads.filter(l => !serverIds.has(l.id.toLowerCase()))];
-          MockDataProvider.saveLeads(combined);
+          // Authoritative sync: save server leads directly (purges old mock data)
+          MockDataProvider.saveLeads(serverLeads);
         }
       }
     } catch (e) {

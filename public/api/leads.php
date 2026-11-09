@@ -122,6 +122,38 @@ if ($method === 'POST') {
         exit;
     }
 
+    // CLEAR ALL LEADS (Clean Slate)
+    if ($action === 'clear' || (isset($data['action']) && $data['action'] === 'clear')) {
+        if ($pdo) {
+            try {
+                $pdo->exec("DELETE FROM leads");
+            } catch (Exception $e) {}
+        }
+        writeJsonLeads($jsonPath, []);
+        echo json_encode(['success' => true, 'message' => 'All leads cleared successfully.']);
+        exit;
+    }
+
+    // DELETE SINGLE LEAD
+    if ($action === 'delete' || (isset($data['action']) && $data['action'] === 'delete')) {
+        $id = trim($data['id'] ?? '');
+        if ($id) {
+            if ($pdo) {
+                try {
+                    $stmt = $pdo->prepare("DELETE FROM leads WHERE id = :id");
+                    $stmt->execute([':id' => $id]);
+                } catch (Exception $e) {}
+            }
+            $leads = readJsonLeads($jsonPath);
+            $leads = array_values(array_filter($leads, function($l) use ($id) {
+                return ($l['id'] ?? '') !== $id;
+            }));
+            writeJsonLeads($jsonPath, $leads);
+        }
+        echo json_encode(['success' => true]);
+        exit;
+    }
+
     // UPDATE STATUS / NOTES ACTION
     if ($action === 'update' || isset($data['action']) && $data['action'] === 'update') {
         $id = trim($data['id'] ?? '');
@@ -256,3 +288,4 @@ if ($method === 'POST') {
 
 http_response_code(405);
 echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+
