@@ -2,6 +2,10 @@
   RewriteEngine On
   RewriteBase /
 
+  # Force HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
   # Handle API endpoints for Hostinger PHP backend
   RewriteRule ^api/site-config$ api/site-config.php [L,QSA]
 
