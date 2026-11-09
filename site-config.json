@@ -17,12 +17,12 @@
     "submitBtnText": "Proceed",
     "programOptions": [
       {
-        "id": "ba-llb",
+        "id": "ba-llb-5yr",
         "value": "B.A. LL.B (5-Year)",
         "label": "B.A. LL.B (5-Year Integrated Course - After 10+2)"
       },
       {
-        "id": "llb",
+        "id": "llb-3yr",
         "value": "LL.B (3-Year)",
         "label": "LL.B (3-Year Professional Course - After Graduation)"
       }

@@ -188,6 +188,17 @@ function renderLogin() {
 function syncInputsToConfig() {
   if (!currentConfig) return;
 
+  // Auto-heal empty program options from current active courses
+  if (!Array.isArray(currentConfig.formConfig?.programOptions) || currentConfig.formConfig.programOptions.length === 0) {
+    if (Array.isArray(currentConfig.courses) && currentConfig.courses.length > 0) {
+      currentConfig.formConfig.programOptions = currentConfig.courses.map(c => ({
+        id: c.id,
+        value: c.code || c.title,
+        label: `${c.code || c.title} (${c.degreeBadge || c.duration || 'Degree'})`
+      }));
+    }
+  }
+
   const formHeading = document.getElementById('form-heading');
   if (formHeading) currentConfig.formConfig.heading = formHeading.value.trim();
 

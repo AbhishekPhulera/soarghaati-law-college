@@ -101,16 +101,33 @@ function applyInstitutionalConfig(cfg) {
 
   // Form Dropdown: Course / Program
   const modalProgSelect = document.getElementById('m-prog');
-  if (modalProgSelect && formConfig?.programOptions) {
+  if (modalProgSelect) {
     const curVal = modalProgSelect.value;
-    modalProgSelect.innerHTML = '';
-    formConfig.programOptions.forEach(opt => {
+    modalProgSelect.innerHTML = '<option value="" disabled selected>-- Select Desired Programme --</option>';
+
+    let options = [];
+    if (Array.isArray(formConfig?.programOptions) && formConfig.programOptions.length > 0) {
+      options = formConfig.programOptions;
+    } else if (Array.isArray(courses) && courses.length > 0) {
+      options = courses.map(c => ({
+        id: c.id,
+        value: c.title,
+        label: `${c.title} (${c.degreeBadge || c.duration || 'Degree'})`
+      }));
+    } else {
+      options = [
+        { id: 'ba-llb-5yr', value: 'B.A. LL.B (5-Year)', label: 'B.A. LL.B (5-Year Integrated Course - After 10+2)' },
+        { id: 'llb-3yr', value: 'LL.B (3-Year)', label: 'LL.B (3-Year Professional Course - After Graduation)' }
+      ];
+    }
+
+    options.forEach(opt => {
       const optEl = document.createElement('option');
-      optEl.value = opt.value;
+      optEl.value = opt.value || opt.label;
       optEl.textContent = opt.label || opt.value;
       modalProgSelect.appendChild(optEl);
     });
-    if (curVal && formConfig.programOptions.some(o => o.value === curVal)) {
+    if (curVal && options.some(o => (o.value || o.label) === curVal)) {
       modalProgSelect.value = curVal;
     }
   }
@@ -426,6 +443,31 @@ function setupModalHandlers() {
     e.preventDefault();
     if (modalFormContent) modalFormContent.style.display = 'none';
     if (modalSuccessContent) modalSuccessContent.style.display = 'block';
+
+    const name = document.getElementById('m-name')?.value || '';
+    const phone = document.getElementById('m-phone')?.value || '';
+    const prog = document.getElementById('m-prog')?.value || 'B.A. LL.B';
+    const qual = document.getElementById('m-qual')?.value || '';
+    const state = document.getElementById('m-state')?.value || '';
+    const city = document.getElementById('m-city')?.value || '';
+
+    // Persist directly to Hostinger Server Database (SQLite & JSON)
+    try {
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentName: name,
+          mobile: phone,
+          email: `${name.toLowerCase().replace(/[^a-z0-9]/g, '.')}@gmail.com`,
+          course: prog,
+          percentage: qual,
+          state,
+          city,
+          source: 'Faculty Page Admission Modal'
+        })
+      }).catch(err => console.warn('Could not sync lead to server:', err));
+    } catch (netErr) {}
 
     // Trigger immediate download
     const dlLink = document.getElementById('btn-brochure-download-link');

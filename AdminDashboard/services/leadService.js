@@ -54,6 +54,41 @@ export class LeadService {
     page = 1,
     pageSize = 10
   } = {}) {
+    // 0. Sync real leads directly from Hostinger SQLite Server Database
+    try {
+      const res = await fetch('/api/leads');
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const serverLeads = json.data.map(r => ({
+            id: r.id,
+            name: r.studentName || r.name,
+            mobile: r.mobile || r.phone,
+            email: r.email || `${(r.studentName || r.name || 'student').toLowerCase().replace(/[^a-z0-9]/g, '.')}@gmail.com`,
+            altMobile: '',
+            course: r.course || r.program,
+            city: r.city || 'Pithoragarh',
+            state: r.state || 'Uttarakhand',
+            academicScore: r.percentage || r.qualification || 'N/A',
+            category: 'General',
+            createdAt: r.createdAt || new Date().toISOString(),
+            status: r.status || 'New',
+            followUpDate: null,
+            message: `Online enquiry via website for ${r.course || 'Admissions'}. Qualification: ${r.percentage || 'N/A'}. Location: ${r.city || 'Pithoragarh'}, ${r.state || 'Uttarakhand'}.`,
+            notes: r.notes ? [{ id: 'n-1', author: 'Administrator', text: r.notes, createdAt: r.updatedAt || r.createdAt }] : [],
+            history: [{ timestamp: r.createdAt || new Date().toISOString(), action: 'Online Enquiry Received', details: `Registered for ${r.course || 'Law Programme'}`, performedBy: 'Website Visitor' }]
+          }));
+
+          const localLeads = MockDataProvider.getStoredLeads();
+          const serverIds = new Set(serverLeads.map(l => l.id.toLowerCase()));
+          const combined = [...serverLeads, ...localLeads.filter(l => !serverIds.has(l.id.toLowerCase()))];
+          MockDataProvider.saveLeads(combined);
+        }
+      }
+    } catch (e) {
+      console.warn('[LeadService] Could not reach /api/leads, using local storage:', e);
+    }
+
     // Simulate brief asynchronous network delay (80ms)
     await new Promise(resolve => setTimeout(resolve, 80));
 
@@ -223,6 +258,15 @@ export class LeadService {
     leads[leadIndex] = targetLead;
     MockDataProvider.saveLeads(leads);
 
+    // Sync status change to Hostinger Server Database
+    try {
+      fetch('/api/leads?action=update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: targetLead.id, status: newStatus, notes: reasonOrNote || '' })
+      }).catch(err => console.warn('Could not sync status to server:', err));
+    } catch (e) {}
+
     // Record audit event
     AuditService.log(AuditAction.STATUS_CHANGE, {
       leadId: targetLead.id,
@@ -281,6 +325,15 @@ export class LeadService {
 
     leads[leadIndex] = targetLead;
     MockDataProvider.saveLeads(leads);
+
+    // Sync note to Hostinger Server Database
+    try {
+      fetch('/api/leads?action=update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: targetLead.id, notes: noteText.trim() })
+      }).catch(err => console.warn('Could not sync note to server:', err));
+    } catch (e) {}
 
     AuditService.log(AuditAction.NOTE_ADDED, {
       leadId: targetLead.id,

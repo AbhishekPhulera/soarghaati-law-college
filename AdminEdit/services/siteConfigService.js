@@ -313,9 +313,11 @@ export class SiteConfigService {
       formConfig: {
         ...DEFAULT_SITE_CONFIG.formConfig,
         ...(parsed.formConfig || {}),
-        programOptions: Array.isArray(parsed.formConfig?.programOptions)
+        programOptions: (Array.isArray(parsed.formConfig?.programOptions) && parsed.formConfig.programOptions.length > 0)
           ? parsed.formConfig.programOptions
-          : DEFAULT_SITE_CONFIG.formConfig.programOptions,
+          : (Array.isArray(parsed.courses) && parsed.courses.length > 0
+              ? parsed.courses.map(c => ({ id: c.id, value: c.code || c.title, label: `${c.code || c.title} (${c.degreeBadge || c.duration || 'Degree'})` }))
+              : DEFAULT_SITE_CONFIG.formConfig.programOptions),
         stateOptions: Array.isArray(parsed.formConfig?.stateOptions)
           ? parsed.formConfig.stateOptions
           : DEFAULT_SITE_CONFIG.formConfig.stateOptions,

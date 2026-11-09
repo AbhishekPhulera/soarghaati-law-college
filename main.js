@@ -324,6 +324,35 @@ function saveEnquiryToDashboard(leadData) {
 
     leads.unshift(newLead);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+
+    // Persist directly to Hostinger Server Database (SQLite & JSON)
+    try {
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentName: cleanName,
+          mobile: (leadData.phone || '').trim(),
+          email: `${emailPrefix}@gmail.com`,
+          course: courseName,
+          percentage: (leadData.qualification || '').trim(),
+          state: (leadData.state || '').trim(),
+          city: (leadData.city || '').trim(),
+          source: 'Website Admission Form'
+        })
+      }).then(r => r.json()).then(res => {
+        if (res && res.success && res.id) {
+          newLead.id = res.id;
+          if (leads[0]) leads[0].id = res.id;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+        }
+      }).catch(err => {
+        console.warn('[Admissions Desk] Error saving lead to server database:', err);
+      });
+    } catch (netErr) {
+      console.warn('[Admissions Desk] Server sync error:', netErr);
+    }
+
     return newLead;
   } catch (err) {
     console.warn('[Admissions Desk] Error saving lead to storage:', err);
@@ -596,16 +625,34 @@ function applySiteConfig() {
   const modalProgSelect = document.getElementById('m-prog');
 
   const populateProgSelect = (selectEl) => {
-    if (!selectEl || !formConfig.programOptions) return;
+    if (!selectEl) return;
     const curVal = selectEl.value;
-    selectEl.innerHTML = '';
-    formConfig.programOptions.forEach(opt => {
+    selectEl.innerHTML = '<option value="" disabled selected>-- Select Desired Programme --</option>';
+
+    let options = [];
+    if (Array.isArray(formConfig?.programOptions) && formConfig.programOptions.length > 0) {
+      options = formConfig.programOptions;
+    } else if (Array.isArray(courses) && courses.length > 0) {
+      options = courses.map(c => ({
+        id: c.id,
+        value: c.title,
+        label: `${c.title} (${c.degreeBadge || c.duration || 'Degree'})`
+      }));
+    } else {
+      options = [
+        { id: 'ba-llb-5yr', value: 'B.A. LL.B (5-Year)', label: 'B.A. LL.B (5-Year Integrated Course - After 10+2)' },
+        { id: 'llb-3yr', value: 'LL.B (3-Year)', label: 'LL.B (3-Year Professional Course - After Graduation)' }
+      ];
+    }
+
+    options.forEach(opt => {
       const optEl = document.createElement('option');
-      optEl.value = opt.value;
+      optEl.value = opt.value || opt.label;
       optEl.textContent = opt.label || opt.value;
       selectEl.appendChild(optEl);
     });
-    if (curVal && formConfig.programOptions.some(o => o.value === curVal)) {
+
+    if (curVal && options.some(o => (o.value || o.label) === curVal)) {
       selectEl.value = curVal;
     }
   };
