@@ -118,12 +118,11 @@ export class AuthService {
       };
     }
 
-    // Development phase check: Accept valid admin pattern
-    // (Note: Production Supabase will verify password hash via bcrypt/Argon2 server-side)
-    if (cleanPassword.length < 6) {
+    // Validate against Master Administrator Password
+    if (cleanPassword !== 'AdminPassword2026!') {
       return {
         success: false,
-        error: 'Invalid administrative credentials. Password must be at least 6 characters.'
+        error: 'Invalid administrative password. Access denied.'
       };
     }
 

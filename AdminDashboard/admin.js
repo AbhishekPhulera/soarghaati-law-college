@@ -154,12 +154,6 @@ class AdminApp {
             </button>
           </form>
 
-          <div class="demo-login-row">
-            <button type="button" id="fill-demo-btn" class="demo-pill-btn">
-              ⚡ Fill Demo Credentials
-            </button>
-          </div>
-
           <div style="text-align:center; margin-top:20px;">
             <a href="/" class="clean-link">&larr; Back to College Website</a>
           </div>
@@ -174,19 +168,11 @@ class AdminApp {
     const errBox = document.getElementById('login-err-box');
     const submitBtn = document.getElementById('login-btn');
     const btnLabel = document.getElementById('login-btn-label');
-    const demoBtn = document.getElementById('fill-demo-btn');
 
     toggleBtn.addEventListener('click', () => {
       const isPwd = pwdInput.type === 'password';
       pwdInput.type = isPwd ? 'text' : 'password';
       toggleBtn.textContent = isPwd ? 'Hide' : 'Show';
-    });
-
-    demoBtn.addEventListener('click', () => {
-      emailInput.value = 'admin@soarghaati.edu.in';
-      pwdInput.value = 'Admin@2026!';
-      errBox.style.display = 'none';
-      this.showToast('Filled demo login details.', 'info');
     });
 
     form.addEventListener('submit', async (e) => {
@@ -252,9 +238,6 @@ class AdminApp {
           </div>
 
           <div class="navbar-actions">
-            <a href="/AdminEdit/" target="_blank" rel="noopener" class="simple-btn-outline" title="Website Editor CMS" style="background:#fef3c7; color:#b45309; border-color:#fde68a; font-weight:700;">
-              ✏️ <span class="hide-mobile">Edit Website</span>
-            </a>
             <button type="button" id="export-csv-btn" class="simple-btn-outline" title="Download Excel/CSV">
               📥 <span class="hide-mobile">Export CSV</span>
             </button>

@@ -263,9 +263,6 @@ function renderDashboard(reloadFromStorage = false) {
             <a href="/" target="_blank" rel="noopener" class="btn-header-action btn-preview-site" title="Open live college website in new tab">
               <span>👁️ View Live Website</span>
             </a>
-            <a href="/AdminDashboard/" target="_blank" rel="noopener" class="btn-header-action btn-leads-portal" title="Open Admissions Lead Portal">
-              <span>📊 Leads Portal</span>
-            </a>
             <button id="btn-save-all" class="btn-header-action btn-save-publish">
               <span>💾 Save &amp; Publish Changes</span>
             </button>
