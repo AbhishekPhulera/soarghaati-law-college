@@ -90,13 +90,51 @@ function applyInstitutionalConfig(cfg) {
     }
   }
 
-  // Brochure links
-  if (institution?.brochureUrl) {
-    document.querySelectorAll('.btn-download-brochure').forEach(btn => {
-      btn.href = institution.brochureUrl;
+  // Social Media Links
+  const social = config?.socialLinks || {};
+  const socialMap = [
+    { selector: '.top-social-btn[aria-label="Facebook"]', url: social.facebook },
+    { selector: '.top-social-btn[aria-label="Instagram"]', url: social.instagram },
+    { selector: '.top-social-btn[aria-label="LinkedIn"]', url: social.linkedin },
+    { selector: '.top-social-btn[aria-label="YouTube"]', url: social.youtube },
+    { selector: '.top-social-btn[aria-label="Twitter"], .top-social-btn[aria-label="X"]', url: social.twitter }
+  ];
+
+  let visibleSocialCount = 0;
+  socialMap.forEach(({ selector, url }) => {
+    document.querySelectorAll(selector).forEach(link => {
+      if (url && url.trim()) {
+        link.href = url.trim();
+        link.style.display = 'inline-flex';
+        visibleSocialCount++;
+      } else {
+        link.style.display = 'none';
+      }
     });
-    const dlLink = document.getElementById('btn-brochure-download-link');
-    if (dlLink) dlLink.href = institution.brochureUrl;
+  });
+
+  document.querySelectorAll('.top-social-group').forEach(group => {
+    group.style.display = visibleSocialCount > 0 ? 'flex' : 'none';
+  });
+
+  // Brochure links
+  const hasBrochure = Boolean(institution?.brochureUrl && institution.brochureUrl.trim());
+  document.querySelectorAll('.btn-download-brochure').forEach(btn => {
+    if (hasBrochure) {
+      btn.href = institution.brochureUrl;
+      btn.style.display = 'inline-flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+  const dlLink = document.getElementById('btn-brochure-download-link');
+  if (dlLink) {
+    if (hasBrochure) {
+      dlLink.href = institution.brochureUrl;
+      dlLink.style.display = 'inline-flex';
+    } else {
+      dlLink.style.display = 'none';
+    }
   }
 
   // Form Dropdown: Course / Program

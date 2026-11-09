@@ -51,5 +51,6 @@ jobs:
             **/ezgif-frame-*.jpg
             **/api/data/leads.db*
             **/api/data/leads.json
+            **/uploads/**
           timeout: 180000
           dangerous-clean-slate: false

@@ -613,14 +613,58 @@ function applySiteConfig() {
     }
   }
 
-  // 3. Brochure links
-  if (institution.brochureUrl) {
-    document.querySelectorAll('.btn-download-brochure').forEach(btn => {
-      btn.href = institution.brochureUrl;
+  // 3. Social Media Links
+  const social = config.socialLinks || {};
+  const socialMap = [
+    { selector: '.top-social-btn[aria-label="Facebook"]', url: social.facebook },
+    { selector: '.top-social-btn[aria-label="Instagram"]', url: social.instagram },
+    { selector: '.top-social-btn[aria-label="LinkedIn"]', url: social.linkedin },
+    { selector: '.top-social-btn[aria-label="YouTube"]', url: social.youtube },
+    { selector: '.top-social-btn[aria-label="Twitter"], .top-social-btn[aria-label="X"]', url: social.twitter }
+  ];
+
+  let visibleSocialCount = 0;
+  socialMap.forEach(({ selector, url }) => {
+    document.querySelectorAll(selector).forEach(link => {
+      if (url && url.trim()) {
+        link.href = url.trim();
+        link.style.display = 'inline-flex';
+        visibleSocialCount++;
+      } else {
+        link.style.display = 'none';
+      }
     });
+  });
+
+  document.querySelectorAll('.top-social-group').forEach(group => {
+    group.style.display = visibleSocialCount > 0 ? 'flex' : 'none';
+  });
+
+  // 4. Brochure links & Storage State
+  const hasBrochure = Boolean(institution.brochureUrl && institution.brochureUrl.trim());
+  document.querySelectorAll('.btn-download-brochure').forEach(btn => {
+    if (hasBrochure) {
+      btn.href = institution.brochureUrl;
+      btn.style.display = 'inline-flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  });
+
+  const modalBrochureCta = document.querySelector('#modal-success .brochure-download-cta');
+  const modalSuccessSub = document.querySelector('#modal-success .m-success-sub');
+  if (modalBrochureCta) {
+    modalBrochureCta.style.display = hasBrochure ? 'block' : 'none';
+  }
+  if (modalSuccessSub) {
+    if (hasBrochure) {
+      modalSuccessSub.textContent = 'Thank you for registering. You can now download the official Admissions & Course Brochure below.';
+    } else {
+      modalSuccessSub.textContent = 'Thank you for registering. Our Admissions team will dispatch the syllabus and course brochure directly to your WhatsApp.';
+    }
   }
 
-  // 4. Form Dropdowns: Course / Program
+  // 5. Form Dropdowns: Course / Program
   const studentProgSelect = document.getElementById('student-program');
   const modalProgSelect = document.getElementById('m-prog');
 

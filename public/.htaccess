@@ -9,6 +9,7 @@
   # Handle API endpoints for Hostinger PHP backend
   RewriteRule ^api/site-config$ api/site-config.php [L,QSA]
   RewriteRule ^api/leads$ api/leads.php [L,QSA]
+  RewriteRule ^api/brochure$ api/brochure.php [L,QSA]
 
   # Allow existing files and folders
   RewriteCond %{REQUEST_FILENAME} -f [OR]

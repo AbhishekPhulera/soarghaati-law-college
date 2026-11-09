@@ -84,6 +84,86 @@ const siteConfigMiddleware = (req, res, next) => {
     }
   }
 
+  // API: Brochure Status, Upload & Deletion Middleware
+  if (cleanUrl === '/api/brochure') {
+    const publicConfigPath = resolve(import.meta.dirname, 'public/site-config.json');
+    const rootConfigPath = resolve(import.meta.dirname, 'site-config.json');
+    const uploadsDir = resolve(import.meta.dirname, 'public/uploads/brochure');
+
+    if (req.method === 'GET') {
+      try {
+        let config = null;
+        if (fs.existsSync(publicConfigPath)) {
+          config = JSON.parse(fs.readFileSync(publicConfigPath, 'utf-8'));
+        } else if (fs.existsSync(rootConfigPath)) {
+          config = JSON.parse(fs.readFileSync(rootConfigPath, 'utf-8'));
+        }
+        const bUrl = config?.institution?.brochureUrl || '';
+        const bName = config?.institution?.brochureFileName || (bUrl ? 'Soarghaati_Law_College_Brochure.pdf' : '');
+        const bSize = config?.institution?.brochureFileSize || '';
+        const bDate = config?.institution?.brochureUploadedAt || '';
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(200);
+        res.end(JSON.stringify({
+          success: true,
+          exists: Boolean(bUrl),
+          url: bUrl,
+          fileName: bName,
+          fileSize: bSize,
+          uploadedAt: bDate
+        }));
+        return;
+      } catch (e) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: e.message }));
+        return;
+      }
+    }
+
+    if (req.method === 'POST') {
+      const isDelete = (req.url || '').includes('action=delete');
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          let hasJsonDelete = false;
+          try {
+            const j = JSON.parse(body);
+            if (j.action === 'delete') hasJsonDelete = true;
+          } catch (_) {}
+
+          if (isDelete || hasJsonDelete) {
+            if (fs.existsSync(uploadsDir)) {
+              const files = fs.readdirSync(uploadsDir);
+              for (const f of files) {
+                if (f.endsWith('.pdf')) {
+                  try { fs.unlinkSync(resolve(uploadsDir, f)); } catch (_) {}
+                }
+              }
+            }
+            [publicConfigPath, rootConfigPath].forEach(cp => {
+              if (fs.existsSync(cp)) {
+                const c = JSON.parse(fs.readFileSync(cp, 'utf-8'));
+                if (c.institution) {
+                  c.institution.brochureUrl = '';
+                  c.institution.brochureFileName = '';
+                  c.institution.brochureFileSize = '';
+                  c.institution.brochureUploadedAt = '';
+                  fs.writeFileSync(cp, JSON.stringify(c, null, 2), 'utf-8');
+                }
+              }
+            });
+            res.setHeader('Content-Type', 'application/json');
+            res.writeHead(200);
+            res.end(JSON.stringify({ success: true, message: 'Brochure deleted from disk' }));
+            return;
+          }
+        } catch (e) {}
+      });
+      return;
+    }
+  }
+
   if (cleanUrl === '/AdminDashboard') {
     res.writeHead(302, { Location: '/AdminDashboard/' });
     res.end();

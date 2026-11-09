@@ -238,6 +238,20 @@ function syncInputsToConfig() {
   const bUrl = document.getElementById('brochure-url');
   if (bUrl) currentConfig.institution.brochureUrl = bUrl.value.trim();
 
+  if (!currentConfig.socialLinks) currentConfig.socialLinks = {};
+  const sFb = document.getElementById('social-facebook');
+  if (sFb) currentConfig.socialLinks.facebook = sFb.value.trim();
+  const sIg = document.getElementById('social-instagram');
+  if (sIg) currentConfig.socialLinks.instagram = sIg.value.trim();
+  const sLi = document.getElementById('social-linkedin');
+  if (sLi) currentConfig.socialLinks.linkedin = sLi.value.trim();
+  const sYt = document.getElementById('social-youtube');
+  if (sYt) currentConfig.socialLinks.youtube = sYt.value.trim();
+  const sTw = document.getElementById('social-twitter');
+  if (sTw) currentConfig.socialLinks.twitter = sTw.value.trim();
+  const sWa = document.getElementById('social-whatsapp');
+  if (sWa) currentConfig.socialLinks.whatsapp = sWa.value.trim();
+
   if (document.getElementById('field-name')) {
     if (!currentConfig.formConfig.fields) currentConfig.formConfig.fields = {};
     currentConfig.formConfig.fields.nameRequired = document.getElementById('field-name').checked;
@@ -302,8 +316,14 @@ function renderDashboard(reloadFromStorage = false) {
           <button class="edit-tab-btn ${currentTab === 'contact' ? 'active' : ''}" data-tab="contact">
             <span>📞</span> Helplines &amp; Contacts
           </button>
+          <button class="edit-tab-btn ${currentTab === 'social' ? 'active' : ''}" data-tab="social">
+            <span>🌐</span> Social Media Links
+          </button>
+          <button class="edit-tab-btn ${currentTab === 'brochure' ? 'active' : ''}" data-tab="brochure">
+            <span>📄</span> Brochure Manager
+          </button>
           <button class="edit-tab-btn ${currentTab === 'announcements' ? 'active' : ''}" data-tab="announcements">
-            <span>📢</span> Announcements &amp; Brochure
+            <span>📢</span> Announcements
           </button>
           <button class="edit-tab-btn ${currentTab === 'settings' ? 'active' : ''}" data-tab="settings">
             <span>⚙️</span> CMS Settings &amp; Password
@@ -320,6 +340,8 @@ function renderDashboard(reloadFromStorage = false) {
         ${renderFacultyPanel()}
         ${renderFormPanel()}
         ${renderContactPanel()}
+        ${renderSocialPanel()}
+        ${renderBrochurePanel()}
         ${renderAnnouncementsPanel()}
         ${renderSettingsPanel()}
         ${renderHistoryPanel()}
@@ -872,7 +894,256 @@ function renderContactPanel() {
 }
 
 /**
- * TAB 4: Announcements & Brochure Panel
+ * TAB 4: Dedicated Social Media Links Panel
+ */
+function renderSocialPanel() {
+  const social = currentConfig.socialLinks || {};
+  return `
+    <section class="edit-panel ${currentTab === 'social' ? 'active' : ''}" id="panel-social">
+      <div class="panel-title-wrap">
+        <div>
+          <h2>🌐 Official Social Media &amp; Channel Links</h2>
+          <p>Manage college social presence displayed on the website top bar, mobile menu drawer, and footer. Clear any link to remove its icon automatically.</p>
+        </div>
+        <button type="button" id="btn-save-social" class="btn-header-action btn-save-publish">
+          <span>💾 Save Social Media Links</span>
+        </button>
+      </div>
+
+      <div class="edit-grid-2">
+        <!-- Facebook -->
+        <div class="edit-card social-item-card">
+          <div class="edit-card-header">
+            <div class="social-header-title">
+              <span class="social-brand-icon social-fb">f</span>
+              <h3>Facebook Page</h3>
+            </div>
+            ${social.facebook ? `<a href="${social.facebook}" target="_blank" rel="noopener" class="social-test-link">Test Link ↗</a>` : '<span class="social-inactive-pill">Not Set</span>'}
+          </div>
+          <div class="edit-input-group">
+            <label for="social-facebook">Facebook Profile / Page URL</label>
+            <div class="input-with-action">
+              <input type="url" id="social-facebook" value="${social.facebook || ''}" placeholder="https://facebook.com/soarghaati.law" />
+              <button type="button" class="btn-clear-input" data-target="social-facebook" title="Delete / Clear this link">✕ Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instagram -->
+        <div class="edit-card social-item-card">
+          <div class="edit-card-header">
+            <div class="social-header-title">
+              <span class="social-brand-icon social-ig">📷</span>
+              <h3>Instagram Profile</h3>
+            </div>
+            ${social.instagram ? `<a href="${social.instagram}" target="_blank" rel="noopener" class="social-test-link">Test Link ↗</a>` : '<span class="social-inactive-pill">Not Set</span>'}
+          </div>
+          <div class="edit-input-group">
+            <label for="social-instagram">Instagram Profile URL</label>
+            <div class="input-with-action">
+              <input type="url" id="social-instagram" value="${social.instagram || ''}" placeholder="https://instagram.com/soarghaati_law" />
+              <button type="button" class="btn-clear-input" data-target="social-instagram" title="Delete / Clear this link">✕ Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LinkedIn -->
+        <div class="edit-card social-item-card">
+          <div class="edit-card-header">
+            <div class="social-header-title">
+              <span class="social-brand-icon social-li">in</span>
+              <h3>LinkedIn Institution Page</h3>
+            </div>
+            ${social.linkedin ? `<a href="${social.linkedin}" target="_blank" rel="noopener" class="social-test-link">Test Link ↗</a>` : '<span class="social-inactive-pill">Not Set</span>'}
+          </div>
+          <div class="edit-input-group">
+            <label for="social-linkedin">LinkedIn Institution URL</label>
+            <div class="input-with-action">
+              <input type="url" id="social-linkedin" value="${social.linkedin || ''}" placeholder="https://linkedin.com/company/soarghaati-law-college" />
+              <button type="button" class="btn-clear-input" data-target="social-linkedin" title="Delete / Clear this link">✕ Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div class="edit-card social-item-card">
+          <div class="edit-card-header">
+            <div class="social-header-title">
+              <span class="social-brand-icon social-yt">▶</span>
+              <h3>YouTube Channel</h3>
+            </div>
+            ${social.youtube ? `<a href="${social.youtube}" target="_blank" rel="noopener" class="social-test-link">Test Link ↗</a>` : '<span class="social-inactive-pill">Not Set</span>'}
+          </div>
+          <div class="edit-input-group">
+            <label for="social-youtube">YouTube Channel URL</label>
+            <div class="input-with-action">
+              <input type="url" id="social-youtube" value="${social.youtube || ''}" placeholder="https://youtube.com/@soarghaatilawcollege" />
+              <button type="button" class="btn-clear-input" data-target="social-youtube" title="Delete / Clear this link">✕ Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- X (Twitter) -->
+        <div class="edit-card social-item-card">
+          <div class="edit-card-header">
+            <div class="social-header-title">
+              <span class="social-brand-icon social-x">𝕏</span>
+              <h3>X (Twitter) Profile</h3>
+            </div>
+            ${social.twitter ? `<a href="${social.twitter}" target="_blank" rel="noopener" class="social-test-link">Test Link ↗</a>` : '<span class="social-inactive-pill">Not Set</span>'}
+          </div>
+          <div class="edit-input-group">
+            <label for="social-twitter">X (Twitter) Handle URL</label>
+            <div class="input-with-action">
+              <input type="url" id="social-twitter" value="${social.twitter || ''}" placeholder="https://x.com/soarghaatilaw" />
+              <button type="button" class="btn-clear-input" data-target="social-twitter" title="Delete / Clear this link">✕ Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp Admissions Channel / Contact -->
+        <div class="edit-card social-item-card">
+          <div class="edit-card-header">
+            <div class="social-header-title">
+              <span class="social-brand-icon social-wa">💬</span>
+              <h3>WhatsApp Admissions Direct</h3>
+            </div>
+            ${social.whatsapp ? `<a href="${social.whatsapp}" target="_blank" rel="noopener" class="social-test-link">Test Link ↗</a>` : '<span class="social-inactive-pill">Not Set</span>'}
+          </div>
+          <div class="edit-input-group">
+            <label for="social-whatsapp">WhatsApp Link or Channel URL</label>
+            <div class="input-with-action">
+              <input type="url" id="social-whatsapp" value="${social.whatsapp || ''}" placeholder="https://wa.me/917830201028" />
+              <button type="button" class="btn-clear-input" data-target="social-whatsapp" title="Delete / Clear this link">✕ Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; padding:16px; background:var(--slc-card-bg); border:1px solid var(--slc-border); border-radius:10px;">
+        <p style="font-size:0.86rem; color:var(--slc-text-muted); margin:0;">
+          💡 <strong>Notice:</strong> If any social media link is cleared or left empty, its corresponding icon is automatically hidden from the live website header and mobile drawer so prospective students never see broken links.
+        </p>
+      </div>
+    </section>
+  `;
+}
+
+/**
+ * TAB 5: Dedicated College Brochure Manager Panel
+ */
+function renderBrochurePanel() {
+  const { institution } = currentConfig;
+  const hasBrochure = Boolean(institution.brochureUrl);
+  const fileName = institution.brochureFileName || (hasBrochure ? institution.brochureUrl.split('/').pop() : '');
+  const fileSize = institution.brochureFileSize || '';
+  const uploadDate = institution.brochureUploadedAt ? new Date(institution.brochureUploadedAt).toLocaleString() : '';
+
+  return `
+    <section class="edit-panel ${currentTab === 'brochure' ? 'active' : ''}" id="panel-brochure">
+      <div class="panel-title-wrap">
+        <div>
+          <h2>📄 College Prospectus &amp; Syllabus Brochure</h2>
+          <p>Upload official PDF prospectus, monitor hosting storage footprint, or permanently delete brochure from server storage.</p>
+        </div>
+      </div>
+
+      <div class="edit-grid-2">
+        <!-- Card 1: Active Brochure Status & Server Storage -->
+        <div class="edit-card">
+          <div class="edit-card-header">
+            <h3>💾 Current Brochure &amp; Server Storage Status</h3>
+            ${hasBrochure 
+              ? `<span class="cms-status-badge badge-active">● Active on Website</span>` 
+              : `<span class="cms-status-badge badge-empty">○ No File Stored</span>`}
+          </div>
+
+          ${hasBrochure ? `
+            <div class="brochure-active-card">
+              <div class="brochure-file-icon">📄</div>
+              <div class="brochure-file-info">
+                <h4 class="brochure-file-name">${fileName}</h4>
+                <div class="brochure-file-meta">
+                  ${fileSize ? `<span><strong>Size:</strong> ${fileSize}</span> • ` : ''}
+                  <span><strong>Target:</strong> <code>${institution.brochureUrl}</code></span>
+                  ${uploadDate ? `<br><span><strong>Uploaded:</strong> ${uploadDate}</span>` : ''}
+                </div>
+              </div>
+            </div>
+
+            <div class="brochure-actions-row">
+              <a href="${institution.brochureUrl}" target="_blank" rel="noopener" class="btn-brochure-preview">
+                👁️ Preview / View Current PDF ↗
+              </a>
+              <button type="button" id="btn-delete-brochure" class="btn-brochure-delete" title="Permanently delete PDF from hosting server">
+                🗑️ Delete Brochure from Server
+              </button>
+            </div>
+            <p class="brochure-storage-hint">
+              💡 <strong>Storage Note:</strong> Clicking "Delete Brochure" permanently unlinks and deletes this PDF file from the server disk storage to free up space.
+            </p>
+          ` : `
+            <div class="brochure-empty-state">
+              <div class="empty-icon">📂</div>
+              <h4>No Brochure Stored on Server</h4>
+              <p>There is currently no PDF brochure stored on your hosting server (0 MB consumed). Candidates who submit the admission form will be invited to receive the syllabus directly on WhatsApp.</p>
+            </div>
+          `}
+        </div>
+
+        <!-- Card 2: Upload New Brochure (PDF) -->
+        <div class="edit-card">
+          <div class="edit-card-header">
+            <h3>📤 Upload New Brochure (PDF)</h3>
+            <span class="cms-badge-soft">PDF up to 50 MB</span>
+          </div>
+          <p style="font-size:0.84rem; color:var(--slc-text-muted); margin-bottom:14px;">
+            Select a new prospectus PDF from your device. Uploading automatically replaces any previous brochure to ensure no redundant files consume hosting storage.
+          </p>
+
+          <div id="brochure-dropzone" class="brochure-dropzone">
+            <input type="file" id="brochure-file-input" accept=".pdf,application/pdf" style="display:none;" />
+            <div class="dropzone-inner" id="dropzone-click-area">
+              <div class="dropzone-icon">📁</div>
+              <p class="dropzone-text"><strong>Click to browse</strong> or drag &amp; drop PDF here</p>
+              <span class="dropzone-sub">Supported format: .pdf (Max 50MB)</span>
+            </div>
+            <div id="brochure-selected-info" class="brochure-selected-info" style="display:none;">
+              <span class="selected-file-icon">📄</span>
+              <div class="selected-file-details">
+                <span id="selected-file-name" class="selected-file-name">filename.pdf</span>
+                <span id="selected-file-size" class="selected-file-size">0 KB</span>
+              </div>
+              <button type="button" id="btn-cancel-file" class="btn-cancel-file" title="Remove selected file">✕</button>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;">
+            <button type="button" id="btn-upload-brochure" class="btn-header-action btn-save-publish" style="width:100%; justify-content:center;" disabled>
+              <span>📤 Upload &amp; Publish Brochure to Live Site</span>
+            </button>
+          </div>
+
+          <!-- Optional external link fallback -->
+          <div style="margin-top:20px; padding-top:16px; border-top:1px dashed var(--slc-border);">
+            <label for="brochure-url" style="font-size:0.82rem; font-weight:600; color:var(--slc-text-muted); display:block; margin-bottom:6px;">
+              Or Link to an External PDF / Cloud Storage URL:
+            </label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="brochure-url" value="${institution.brochureUrl || ''}" placeholder="https://drive.google.com/... or /uploads/..." style="font-size:0.84rem; padding:8px 12px; flex:1;" />
+              <button type="button" id="btn-save-brochure-url" class="btn-tab-action" style="white-space:nowrap; padding:8px 14px;">
+                Save URL
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+/**
+ * TAB 6: Announcements Panel
  */
 function renderAnnouncementsPanel() {
   const { institution } = currentConfig;
@@ -880,11 +1151,11 @@ function renderAnnouncementsPanel() {
     <section class="edit-panel ${currentTab === 'announcements' ? 'active' : ''}" id="panel-announcements">
       <div class="panel-title-wrap">
         <div>
-          <h2>Top Banner Announcement &amp; Brochure PDF</h2>
-          <p>Control the announcement text displayed at the top of the website and the prospectus download destination.</p>
+          <h2>📢 Top Banner Announcement &amp; Batch Ticker</h2>
+          <p>Control the announcement text displayed at the top of the website and current academic batch.</p>
         </div>
         <button type="button" id="btn-save-announcements" class="btn-header-action btn-save-publish">
-          <span>💾 Save Announcements &amp; Brochure</span>
+          <span>💾 Save Announcements</span>
         </button>
       </div>
 
@@ -905,18 +1176,12 @@ function renderAnnouncementsPanel() {
 
         <div class="edit-card">
           <div class="edit-card-header">
-            <h3>📄 College Prospectus / Brochure PDF URL</h3>
+            <h3>👁️ Live Preview Simulation</h3>
           </div>
-          <p style="font-size:0.84rem; color:var(--slc-text-muted); margin-bottom:12px;">When candidates submit their details, this PDF will download automatically:</p>
-          <div class="edit-input-group">
-            <label for="brochure-url">Brochure File Path or External URL</label>
-            <input type="text" id="brochure-url" value="${institution.brochureUrl || '/Soarghaati_Law_College_Brochure_2026.pdf'}" />
-          </div>
-          <div style="margin-top:14px; padding:12px; background:var(--slc-bg); border-radius:6px; font-size:0.8rem;">
-            <span>Current File Target: </span>
-            <a href="${institution.brochureUrl || '/Soarghaati_Law_College_Brochure_2026.pdf'}" target="_blank" rel="noopener" style="color:var(--slc-gold-600); font-weight:700;">
-              Preview Brochure PDF ↗
-            </a>
+          <p style="font-size:0.84rem; color:var(--slc-text-muted); margin-bottom:12px;">This is how the announcement strip renders at the top of the live website:</p>
+          <div style="background:#070e1c; color:#fff; padding:16px 20px; border-radius:8px; font-size:0.84rem; border-left:4px solid var(--slc-gold-500); line-height:1.5;">
+            <span style="background:var(--slc-gold-500); color:#070e1c; font-weight:800; font-size:0.72rem; padding:2px 8px; border-radius:4px; margin-right:8px; display:inline-block;">ADMISSIONS ${institution.academicYear || '2026–27'}</span>
+            <span>${institution.topAnnouncement || 'Admissions Open'}</span>
           </div>
         </div>
       </div>
@@ -1539,7 +1804,9 @@ function attachDashboardEvents() {
     'form-heading', 'form-subheading', 'form-submit-text',
     'contact-phone-primary', 'contact-wa-number', 'contact-email',
     'inst-name', 'inst-tagline', 'inst-address',
-    'top-announcement-text', 'academic-year-text', 'brochure-url'
+    'top-announcement-text', 'academic-year-text', 'brochure-url',
+    'social-facebook', 'social-instagram', 'social-linkedin',
+    'social-youtube', 'social-twitter', 'social-whatsapp'
   ];
   liveInputIds.forEach(id => {
     const el = document.getElementById(id);
@@ -1547,6 +1814,19 @@ function attachDashboardEvents() {
       el.addEventListener('input', () => syncInputsToConfig());
       el.addEventListener('change', () => syncInputsToConfig());
     }
+  });
+
+  // Clear / Delete individual social link buttons
+  document.querySelectorAll('.btn-clear-input').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      if (input) {
+        input.value = '';
+        syncInputsToConfig();
+        showToast(`Link cleared. Click "Save Social Media Links" to publish.`, 'info');
+      }
+    });
   });
 
   // Checkbox listeners with immediate persistence
@@ -1569,6 +1849,185 @@ function attachDashboardEvents() {
       });
     }
   });
+
+  // Dedicated Brochure File Selection & Dropzone
+  const dropzoneArea = document.getElementById('dropzone-click-area');
+  const brochureFileInput = document.getElementById('brochure-file-input');
+  const selectedInfo = document.getElementById('brochure-selected-info');
+  const selectedFileName = document.getElementById('selected-file-name');
+  const selectedFileSize = document.getElementById('selected-file-size');
+  const cancelFileBtn = document.getElementById('btn-cancel-file');
+  const uploadBrochureBtn = document.getElementById('btn-upload-brochure');
+
+  if (dropzoneArea && brochureFileInput) {
+    dropzoneArea.addEventListener('click', () => brochureFileInput.click());
+
+    const handleSelectedPdf = (file) => {
+      if (!file) return;
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        showToast('Error: Only PDF documents (.pdf) can be uploaded.', 'error');
+        return;
+      }
+      if (file.size > 50 * 1024 * 1024) {
+        showToast('Error: File exceeds the 50MB hosting limit.', 'error');
+        return;
+      }
+      if (selectedFileName) selectedFileName.textContent = file.name;
+      if (selectedFileSize) selectedFileSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      dropzoneArea.style.display = 'none';
+      if (selectedInfo) selectedInfo.style.display = 'flex';
+      if (uploadBrochureBtn) uploadBrochureBtn.disabled = false;
+    };
+
+    brochureFileInput.addEventListener('change', () => {
+      if (brochureFileInput.files && brochureFileInput.files[0]) {
+        handleSelectedPdf(brochureFileInput.files[0]);
+      }
+    });
+
+    // Drag and Drop
+    const dropzoneWrap = document.getElementById('brochure-dropzone');
+    if (dropzoneWrap) {
+      ['dragenter', 'dragover'].forEach(evt => {
+        dropzoneWrap.addEventListener(evt, (e) => {
+          e.preventDefault();
+          dropzoneWrap.classList.add('drag-active');
+        });
+      });
+      ['dragleave', 'drop'].forEach(evt => {
+        dropzoneWrap.addEventListener(evt, (e) => {
+          e.preventDefault();
+          dropzoneWrap.classList.remove('drag-active');
+        });
+      });
+      dropzoneWrap.addEventListener('drop', (e) => {
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+          brochureFileInput.files = e.dataTransfer.files;
+          handleSelectedPdf(e.dataTransfer.files[0]);
+        }
+      });
+    }
+
+    if (cancelFileBtn) {
+      cancelFileBtn.addEventListener('click', () => {
+        brochureFileInput.value = '';
+        dropzoneArea.style.display = 'flex';
+        if (selectedInfo) selectedInfo.style.display = 'none';
+        if (uploadBrochureBtn) uploadBrochureBtn.disabled = true;
+      });
+    }
+  }
+
+  // Upload Brochure Action
+  if (uploadBrochureBtn) {
+    uploadBrochureBtn.addEventListener('click', async () => {
+      if (!brochureFileInput || !brochureFileInput.files || !brochureFileInput.files[0]) return;
+      const file = brochureFileInput.files[0];
+      const formData = new FormData();
+      formData.append('brochure', file);
+
+      uploadBrochureBtn.disabled = true;
+      uploadBrochureBtn.innerHTML = `<span>⏳ Uploading ${file.name} to Server...</span>`;
+      showToast(`⏳ Uploading PDF to server storage...`, 'info');
+
+      try {
+        const res = await fetch('/api/brochure', {
+          method: 'POST',
+          body: formData
+        });
+        const json = await res.json();
+        if (json && json.success) {
+          currentConfig.institution.brochureUrl = json.data?.url || `/uploads/brochure/${file.name}`;
+          currentConfig.institution.brochureFileName = json.data?.fileName || file.name;
+          currentConfig.institution.brochureFileSize = json.data?.fileSize || `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+          currentConfig.institution.brochureUploadedAt = json.data?.uploadedAt || new Date().toISOString();
+
+          await SiteConfigService.saveConfig(currentConfig, `Uploaded new brochure PDF: ${file.name}`, 'Web Administrator');
+          showToast(`🎉 Brochure uploaded successfully and published to live website!`, 'success');
+          currentTab = 'brochure';
+          renderDashboard();
+        } else {
+          showToast(`Upload failed: ${json.error || 'Server error'}`, 'error');
+          uploadBrochureBtn.disabled = false;
+          uploadBrochureBtn.innerHTML = `<span>📤 Upload &amp; Publish Brochure to Live Site</span>`;
+        }
+      } catch (err) {
+        console.error('[Brochure Upload Error]:', err);
+        showToast('Upload error: Could not reach /api/brochure', 'error');
+        uploadBrochureBtn.disabled = false;
+        uploadBrochureBtn.innerHTML = `<span>📤 Upload &amp; Publish Brochure to Live Site</span>`;
+      }
+    });
+  }
+
+  // Delete Brochure from Server Storage Action
+  const deleteBrochureBtn = document.getElementById('btn-delete-brochure');
+  if (deleteBrochureBtn) {
+    deleteBrochureBtn.addEventListener('click', async () => {
+      const confirmed = window.confirm(
+        "⚠️ Are you sure you want to permanently delete the brochure PDF from the server?\n\n" +
+        "• This will physically remove the PDF file from Hostinger disk storage to free up space.\n" +
+        "• The download link will be reset on the website.\n\n" +
+        "Click OK to permanently delete the brochure."
+      );
+      if (!confirmed) return;
+
+      deleteBrochureBtn.disabled = true;
+      deleteBrochureBtn.innerHTML = '⏳ Deleting from Server Storage...';
+      showToast('⏳ Permanently deleting brochure file from server storage...', 'info');
+
+      try {
+        const res = await fetch('/api/brochure?action=delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete' })
+        });
+        const json = await res.json();
+        if (json && json.success) {
+          currentConfig.institution.brochureUrl = '';
+          currentConfig.institution.brochureFileName = '';
+          currentConfig.institution.brochureFileSize = '';
+          currentConfig.institution.brochureUploadedAt = '';
+
+          await SiteConfigService.saveConfig(currentConfig, 'Permanently deleted brochure PDF from server storage', 'Web Administrator');
+          showToast('🗑️ Brochure permanently deleted from server storage. Disk space cleared!', 'success');
+          currentTab = 'brochure';
+          renderDashboard();
+        } else {
+          showToast(`Delete failed: ${json.error || 'Server error'}`, 'error');
+          deleteBrochureBtn.disabled = false;
+          deleteBrochureBtn.innerHTML = '🗑️ Delete Brochure from Server';
+        }
+      } catch (err) {
+        console.error('[Brochure Delete Error]:', err);
+        showToast('Delete error: Could not reach /api/brochure', 'error');
+        deleteBrochureBtn.disabled = false;
+        deleteBrochureBtn.innerHTML = '🗑️ Delete Brochure from Server';
+      }
+    });
+  }
+
+  // Save External Brochure URL Action
+  const saveBrochureUrlBtn = document.getElementById('btn-save-brochure-url');
+  if (saveBrochureUrlBtn) {
+    saveBrochureUrlBtn.addEventListener('click', async () => {
+      const input = document.getElementById('brochure-url');
+      if (input) {
+        const url = input.value.trim();
+        currentConfig.institution.brochureUrl = url;
+        if (url) {
+          currentConfig.institution.brochureFileName = url.split('/').pop() || 'Brochure';
+          currentConfig.institution.brochureFileSize = 'External Link';
+        } else {
+          currentConfig.institution.brochureFileName = '';
+          currentConfig.institution.brochureFileSize = '';
+        }
+        await handleSaveAction('Brochure Destination URL');
+        currentTab = 'brochure';
+        renderDashboard();
+      }
+    });
+  }
 
   // Unified Save Handler
   const handleSaveAction = async (sourceLabel = 'Website Parameters') => {
@@ -1598,9 +2057,14 @@ function attachDashboardEvents() {
     saveContactBtn.addEventListener('click', () => handleSaveAction('Helplines & Contacts'));
   }
 
+  const saveSocialBtn = document.getElementById('btn-save-social');
+  if (saveSocialBtn) {
+    saveSocialBtn.addEventListener('click', () => handleSaveAction('Social Media Links'));
+  }
+
   const saveAnnBtn = document.getElementById('btn-save-announcements');
   if (saveAnnBtn) {
-    saveAnnBtn.addEventListener('click', () => handleSaveAction('Announcements & Brochure'));
+    saveAnnBtn.addEventListener('click', () => handleSaveAction('Announcements & Batch'));
   }
 }
 
