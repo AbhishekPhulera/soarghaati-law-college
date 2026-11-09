@@ -29,3 +29,4 @@ scratch/
 test_*.mjs
 test_*.js
 inspect_frames.ps1
+*.zip
