@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Editor CMS • Soarghaati Law College, Pithoragarh</title>
+  <meta name="description" content="Official Content Management & Site Configuration System for Soarghaati Law College. Manage courses, admission parameters, forms, helplines, and announcements." />
+  
+  <!-- Typography (Inter, Plus Jakarta Sans, Montserrat, JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="icon" type="image/png" href="/college-logo.png" />
+  <link rel="stylesheet" href="/AdminEdit/edit.css" />
+</head>
+<body class="edit-body">
+
+  <!-- Root Application Container -->
+  <div id="edit-app" class="edit-app-root">
+    <!-- Initial Loading Skeleton -->
+    <div class="edit-initial-loader">
+      <div class="loader-crest">
+        <img src="/college-logo.png" alt="Soar Ghaati Law College Logo" style="width:64px; height:64px; object-fit:contain;" />
+      </div>
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Loading Website Editor CMS...</p>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="edit-toasts" class="edit-toast-container" aria-live="polite"></div>
+
+  <!-- Main Administrative Script Module -->
+  <script type="module" src="/AdminEdit/edit.js"></script>
+</body>
+</html>

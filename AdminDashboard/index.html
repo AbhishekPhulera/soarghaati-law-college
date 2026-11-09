@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admission Management Portal • Soarghaati Law College, Pithoragarh</title>
+  <meta name="description" content="Official Administrative Admission Management Dashboard for Soarghaati Law College, Pithoragarh, Uttarakhand. B.A. LL.B, LL.B and LL.M admissions portal." />
+  
+  <!-- Typography (Inter, Plus Jakarta Sans, Montserrat, JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="icon" type="image/png" href="/college-logo.png" />
+  <link rel="stylesheet" href="/AdminDashboard/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- Root Application Container -->
+  <div id="admin-app" class="admin-app-root">
+    <!-- Initial Loading Skeleton -->
+    <div class="admin-initial-loader">
+      <div class="loader-crest">
+        <img src="/college-logo.png" alt="Soar Ghaati Law College Logo" style="width:64px; height:64px; object-fit:contain;" />
+      </div>
+      <div class="loader-spinner"></div>
+      <p class="loader-text">Loading Admission Management Portal...</p>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="admin-toasts" class="admin-toast-container" aria-live="polite"></div>
+
+  <!-- Main Administrative Script Module -->
+  <script type="module" src="/AdminDashboard/admin.js"></script>
+</body>
+</html>

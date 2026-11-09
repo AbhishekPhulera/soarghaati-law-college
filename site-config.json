@@ -1,0 +1,276 @@
+{
+  "institution": {
+    "name": "Soarghaati Law College",
+    "tagline": "First Law College of Pithoragarh District, Uttarakhand",
+    "academicYear": "2026–27",
+    "brochureUrl": "/Soarghaati_Law_College_Brochure_2026.pdf",
+    "phonePrimary": "+91 7830201028",
+    "phoneDisplay": "+91 7830201028",
+    "whatsappNumber": "917830201028",
+    "email": "info@soarghatilaw.org",
+    "address": "Soarghaati Law College, Pithoragarh District, Uttarakhand - 262501, India",
+    "topAnnouncement": "ADMISSIONS 2026–27 OPEN: Direct Merit Admissions Open for B.A. LL.B (5-Year), LL.B (3-Year) & LL.M"
+  },
+  "formConfig": {
+    "heading": "Admission and Brochure",
+    "subheading": "Fill out your details below to download the official prospectus and connect with our admissions desk.",
+    "submitBtnText": "Proceed",
+    "programOptions": [
+      {
+        "id": "ba-llb",
+        "value": "B.A. LL.B (5-Year)",
+        "label": "B.A. LL.B (5-Year Integrated Course - After 10+2)"
+      },
+      {
+        "id": "llb",
+        "value": "LL.B (3-Year)",
+        "label": "LL.B (3-Year Professional Course - After Graduation)"
+      }
+    ],
+    "stateOptions": [
+      "Uttarakhand",
+      "Uttar Pradesh",
+      "Delhi NCR",
+      "Bihar",
+      "Haryana",
+      "Punjab",
+      "Himachal Pradesh",
+      "Rajasthan",
+      "Madhya Pradesh",
+      "Chandigarh",
+      "West Bengal",
+      "Maharashtra",
+      "Gujarat",
+      "Jharkhand",
+      "Assam",
+      "Odisha",
+      "Jammu & Kashmir",
+      "Other State"
+    ],
+    "fields": {
+      "nameRequired": true,
+      "mobileRequired": true,
+      "emailRequired": false,
+      "programRequired": true,
+      "qualificationRequired": true,
+      "stateRequired": true,
+      "cityRequired": true
+    }
+  },
+  "courses": [
+    {
+      "id": "ba-llb-5yr",
+      "code": "B.A. LL.B",
+      "degreeBadge": "5 YEARS INTEGRATED",
+      "badgeColor": "gold",
+      "eligibilityCode": "ELIGIBILITY: 10+2 (ANY STREAM)",
+      "title": "B.A. LL.B (Honours)",
+      "subtitle": "Bachelor of Arts & Bachelor of Laws • Integrated Undergraduate Degree",
+      "description": "The premier five-year double-degree programme designed for students immediately after completing Class 12. Integrates political philosophy, sociology, and economics with rigorous constitutional, criminal, and commercial jurisprudence.",
+      "duration": "5 Academic Years (10 Semesters)",
+      "affiliation": "SSJ University, Almora",
+      "approval": "Bar Council of India (BCI)",
+      "annualSeats": "60 Seats",
+      "isFeatured": false,
+      "featuredLabel": "",
+      "icon": "⚖️",
+      "heroDesc": "5-Year Integrated Course (After 10+2)",
+      "curriculumTags": [
+        "Constitutional Law of India",
+        "Law of Torts & Consumer Protection",
+        "Indian Penal Code & Criminal Justice",
+        "Law of Contracts & Corporate Law",
+        "Appellate Advocacy & Drafting",
+        "Cyber & Intellectual Property Rights"
+      ]
+    },
+    {
+      "id": "llb-3yr",
+      "code": "LL.B",
+      "degreeBadge": "3 YEARS GRADUATE",
+      "badgeColor": "blue",
+      "eligibilityCode": "ELIGIBILITY: GRADUATION IN ANY STREAM",
+      "title": "LL.B (Professional)",
+      "subtitle": "Bachelor of Laws • Graduate Professional Degree",
+      "description": "The classic graduate route into legal practice, catering to degree holders from arts, science, commerce, and engineering backgrounds seeking full Bar Council eligibility.",
+      "duration": "3 Academic Years (6 Semesters)",
+      "affiliation": "SSJ University, Almora",
+      "approval": "Bar Council of India (BCI)",
+      "annualSeats": "120 Seats",
+      "isFeatured": true,
+      "featuredLabel": "MOST POPULAR",
+      "icon": "📖",
+      "heroDesc": "3-Year Professional Course (After Degree)",
+      "curriculumTags": [
+        "Civil Procedure Code (CPC) & Limitation",
+        "Code of Criminal Procedure (CrPC)",
+        "Indian Evidence Act & Trial Advocacy",
+        "Company Law & Competition Jurisprudence",
+        "Administrative & Labour Law",
+        "Professional Ethics & Bar-Bench Relations"
+      ]
+    }
+  ],
+  "faculty": [
+    {
+      "id": "fac-1",
+      "name": "Mr. Satish Chand Upadhyay",
+      "designation": "Principal",
+      "department": "Law Faculty",
+      "qualification": "LL.M, NET, Ph.D in Law",
+      "subject": "Jurisprudence & Legal Studies",
+      "category": "law",
+      "photo": ""
+    },
+    {
+      "id": "fac-2",
+      "name": "Mr. Mukul Chitransh",
+      "designation": "Assistant Professor",
+      "department": "Law Faculty",
+      "qualification": "LL.M, NET",
+      "subject": "Constitutional Law",
+      "category": "law",
+      "photo": ""
+    },
+    {
+      "id": "fac-3",
+      "name": "Mr. Siraj",
+      "designation": "Assistant Professor",
+      "department": "Law Faculty",
+      "qualification": "LL.M, NET",
+      "subject": "Law Of Contract",
+      "category": "law",
+      "photo": ""
+    },
+    {
+      "id": "fac-4",
+      "name": "Mr. Sandeep Kumar Yadav",
+      "designation": "Assistant Professor",
+      "department": "Law Faculty",
+      "qualification": "LL.M, NET",
+      "subject": "Jurisprudence",
+      "category": "law",
+      "photo": ""
+    },
+    {
+      "id": "fac-5",
+      "name": "Mr. Sobhit Chaudhari",
+      "designation": "Assistant Professor",
+      "department": "Law Faculty",
+      "qualification": "LL.M, NET",
+      "subject": "Hindu Law",
+      "category": "law",
+      "photo": ""
+    },
+    {
+      "id": "fac-6",
+      "name": "Mr. Himanshu Mehta",
+      "designation": "Assistant Professor",
+      "department": "Law Faculty",
+      "qualification": "LL.B",
+      "subject": "Legal Aid Clinic",
+      "category": "law",
+      "photo": ""
+    },
+    {
+      "id": "fac-7",
+      "name": "Dr. Devender Singh",
+      "designation": "Assistant Professor",
+      "department": "Department of Humanities",
+      "qualification": "M.A., Ph.D in History",
+      "subject": "History",
+      "category": "humanities",
+      "photo": ""
+    },
+    {
+      "id": "fac-8",
+      "name": "Dr. Surendra Singh Rana",
+      "designation": "Assistant Professor",
+      "department": "Department of Humanities",
+      "qualification": "M.A., Ph.D in Political Science",
+      "subject": "Political Science",
+      "category": "humanities",
+      "photo": ""
+    },
+    {
+      "id": "fac-9",
+      "name": "Mr. Ankur Pant",
+      "designation": "Assistant Professor",
+      "department": "Department of Humanities",
+      "qualification": "M.A., NET in Sociology",
+      "subject": "Sociology",
+      "category": "humanities",
+      "photo": ""
+    },
+    {
+      "id": "fac-10",
+      "name": "Mr. Akhatar Ali",
+      "designation": "Librarian",
+      "department": "Law Library & Documentation",
+      "qualification": "M. Lib",
+      "subject": "Library & Information Science",
+      "category": "library",
+      "photo": ""
+    },
+    {
+      "id": "fac-11",
+      "name": "Miss Kanchan Kanyal",
+      "designation": "Administrative Staff",
+      "department": "Administration",
+      "qualification": "M.A",
+      "subject": "College Administration & Student Records",
+      "category": "admin",
+      "photo": ""
+    },
+    {
+      "id": "fac-12",
+      "name": "Mr. Pramod Kumar Kohli",
+      "designation": "Office Staff-I",
+      "department": "Administration",
+      "qualification": "MBA",
+      "subject": "Academic Operations & Management",
+      "category": "admin",
+      "photo": ""
+    },
+    {
+      "id": "fac-13",
+      "name": "Miss Soniya Tamta",
+      "designation": "Office Staff",
+      "department": "Administration",
+      "qualification": "B.Tech",
+      "subject": "IT Systems & Institutional Data",
+      "category": "admin",
+      "photo": ""
+    },
+    {
+      "id": "fac-14",
+      "name": "Mr. Apurv Raj",
+      "designation": "Class III Staff",
+      "department": "Administration & Facilities",
+      "qualification": "12th",
+      "subject": "Office Support & Coordination",
+      "category": "support",
+      "photo": ""
+    },
+    {
+      "id": "fac-15",
+      "name": "Mr. Kheem Prasad",
+      "designation": "Support Staff (Peon)",
+      "department": "Campus Services",
+      "qualification": "Matriculation",
+      "subject": "Campus Support & Logistics",
+      "category": "support",
+      "photo": ""
+    },
+    {
+      "id": "fac-16",
+      "name": "Smt. Seeta Devi",
+      "designation": "Support Staff (Peon)",
+      "department": "Campus Services",
+      "qualification": "Matriculation",
+      "subject": "Campus Support & Hospitality",
+      "category": "support",
+      "photo": ""
+    }
+  ]
+}

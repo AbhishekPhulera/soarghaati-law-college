@@ -1,0 +1,33 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/ezgif-frame-*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+  from = "/AdminDashboard"
+  to = "/AdminDashboard/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/AdminDashboard/*"
+  to = "/AdminDashboard/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/AdminEdit"
+  to = "/AdminEdit/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/AdminEdit/*"
+  to = "/AdminEdit/index.html"
+  status = 200
