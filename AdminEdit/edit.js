@@ -138,11 +138,6 @@ function renderLogin() {
             Unlock Website Editor →
           </button>
         </form>
-
-        <div class="edit-default-creds">
-          <p><strong>Initial Master Password:</strong> <code>AdminPassword2026!</code></p>
-          <p style="margin-top:4px;">You can change this password at any time inside the CMS Settings tab.</p>
-        </div>
       </div>
     </div>
   `;
