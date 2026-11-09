@@ -23,7 +23,7 @@ export const DEFAULT_SITE_CONFIG = {
     phonePrimary: "+91 7830201028",
     phoneDisplay: "+91 7830201028",
     whatsappNumber: "917830201028",
-    email: "info@soarghatilaw.org",
+    email: "info@sglawcollege.com",
     address: "Soarghaati Law College, Pithoragarh District, Uttarakhand - 262501, India",
     topAnnouncement: "ADMISSIONS 2026–27 OPEN: Direct Merit Admissions Open for B.A. LL.B (5-Year), LL.B (3-Year) & LL.M"
   },

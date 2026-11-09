@@ -26,10 +26,20 @@ jobs:
       - name: 🏗️ Build Production Bundle
         run: npm run build
 
+      - name: 🧹 Prepare Hostinger Host
+        id: host-config
+        run: |
+          RAW_SERVER="${{ secrets.FTP_SERVER }}"
+          CLEAN_SERVER="${RAW_SERVER#ftp://}"
+          CLEAN_SERVER="${CLEAN_SERVER#ftps://}"
+          CLEAN_SERVER="${CLEAN_SERVER%/}"
+          if [ -z "$CLEAN_SERVER" ]; then CLEAN_SERVER="145.79.58.1"; fi
+          echo "host=$CLEAN_SERVER" >> $GITHUB_OUTPUT
+
       - name: 🚀 Sync Files to Hostinger via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ${{ steps.host-config.outputs.host }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
@@ -37,4 +47,5 @@ jobs:
           port: ${{ secrets.FTP_PORT || 21 }}
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_SERVER_DIR || 'public_html/' }}
+          timeout: 180000
           dangerous-clean-slate: false

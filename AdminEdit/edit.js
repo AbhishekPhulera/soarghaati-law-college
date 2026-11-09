@@ -839,7 +839,7 @@ function renderContactPanel() {
           </div>
           <div class="edit-input-group">
             <label for="contact-email">Official Admissions Email Address</label>
-            <input type="email" id="contact-email" value="${institution.email || 'info@soarghatilaw.org'}" placeholder="info@soarghatilaw.org" />
+            <input type="email" id="contact-email" value="${institution.email || 'info@sglawcollege.com'}" placeholder="info@sglawcollege.com" />
           </div>
         </div>
 
