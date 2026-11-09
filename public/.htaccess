@@ -1,0 +1,34 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Handle API endpoints for Hostinger PHP backend
+  RewriteRule ^api/site-config$ api/site-config.php [L,QSA]
+
+  # Allow existing files and folders
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Route subpages directly to their index.html
+  RewriteRule ^faculty/?$ faculty/index.html [L]
+  RewriteRule ^AdminDashboard/?$ AdminDashboard/index.html [L]
+  RewriteRule ^AdminEdit/?$ AdminEdit/index.html [L]
+
+  # Fallback to index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Compression & Caching
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
