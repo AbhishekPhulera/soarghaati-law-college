@@ -211,16 +211,19 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1.25rem;
   flex-wrap: nowrap;
+  width: 100%;
+  overflow: hidden;
 }
 
 .strip-left {
   display: flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: 1rem;
   min-width: 0;
-  flex-shrink: 1;
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .strip-phone-link {
@@ -245,6 +248,8 @@ a {
   align-items: center;
   gap: 0.65rem;
   min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -264,6 +269,10 @@ a {
 .strip-text {
   color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1 1 auto;
   font-size: 0.82rem;
 }
 
@@ -279,6 +288,8 @@ a {
   margin-left: auto;
   flex-shrink: 0;
   white-space: nowrap;
+  position: relative;
+  z-index: 5;
 }
 
 .top-social-group {
@@ -2838,6 +2849,13 @@ a {
    RESPONSIVE DESIGN & COMPLETE SMARTPHONE OPTIMIZATION
    ========================================================================== */
 
+/* LAPTOP & INTERMEDIATE RESOLUTION RULES (Screens <= 1380px or 100%-125% zoom) */
+@media (max-width: 1380px) {
+  .strip-desktop-contact {
+    display: none !important;
+  }
+}
+
 @media (max-width: 1200px) {
   .college-main-name,
   .brand-line-1 { font-size: 1.26rem; letter-spacing: 0.04em; }
@@ -2856,6 +2874,11 @@ a {
 }
 
 @media (max-width: 992px) {
+  .strip-desktop-admissions,
+  .strip-desktop-contact {
+    display: none !important;
+  }
+
   .college-main-name,
   .brand-line-1 { font-size: 1.14rem; letter-spacing: 0.04em; }
   .brand-line-2 { font-size: 0.96rem; letter-spacing: 0.06em; margin-left: 0; }
